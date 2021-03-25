@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2021, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -1309,7 +1309,7 @@ void install_signal_handlers() {
   // exception handling, while leaving the standard BSD signal handlers functional.
   kern_return_t kr;
   kr = task_set_exception_ports(mach_task_self(),
-                                EXC_MASK_BAD_ACCESS | EXC_MASK_ARITHMETIC,
+                                EXC_MASK_BAD_ACCESS | EXC_MASK_BAD_INSTRUCTION | EXC_MASK_ARITHMETIC,
                                 MACH_PORT_NULL,
                                 EXCEPTION_STATE_IDENTITY,
                                 MACHINE_THREAD_STATE);
