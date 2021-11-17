@@ -203,6 +203,9 @@ static void report_and_die(Thread* thread, void* context, const char* filename, 
 
 bool PosixSignals::pd_hotspot_signal_handler(int sig, siginfo_t* info,
                                              ucontext_t* uc, JavaThread* thread) {
+  // Enable WXWrite: this function is called by the signal handler at arbitrary
+  // point of execution.
+  ThreadWXEnable wx(WXWrite, thread);
 
   // decide if this trap can be handled by a stub
   address stub = NULL;
@@ -534,6 +537,10 @@ void os::verify_stack_alignment() {
 int os::extra_bang_size_in_bytes() {
   // AArch64 does not require the additional stack bang.
   return 0;
+}
+
+void os::current_thread_enable_wx(WXMode mode) {
+  pthread_jit_write_protect_np(mode == WXExec);
 }
 
 extern "C" {
