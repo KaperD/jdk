@@ -125,6 +125,40 @@ public class NativeCallTest extends CodeInstallationTest {
         test("I32SDILDS", getI32SDILDS(), float.class, argClazz, argValues);
     }
 
+    @Test
+    public void testNumericTypes() {
+        int sCount = 32;
+        // Pairs of <Object>, <Class>
+        Object[] remainingArgs = new Object[]{
+                        (byte) 1, byte.class,
+                        (byte) 1, byte.class,
+                        (byte) 1, byte.class,
+                        (short) 1, short.class,
+                        1, int.class,
+                        (byte) 1, byte.class,
+                        1.2F, float.class,
+                        (byte) 17, byte.class,
+                        1.2D, double.class,
+                        (byte) 1, byte.class,
+                        1L, long.class
+        };
+        Class<?>[] argClazz = new Class[sCount + remainingArgs.length / 2];
+        Object[] argValues = new Object[sCount + remainingArgs.length / 2];
+        for (int i = 0; i < sCount / 2; i++) {
+            argValues[i] = 1;
+            argClazz[i] = int.class;
+        }
+        for (int i = sCount / 2; i < sCount; i++) {
+            argValues[i] = (float) 1;
+            argClazz[i] = float.class;
+        }
+        for (int i = 0; i < remainingArgs.length; i += 2) {
+            argValues[sCount + i / 2] = remainingArgs[i + 0];
+            argClazz[sCount + i / 2] = (Class<?>) remainingArgs[i + 1];
+        }
+        test("NumericTypes", getNumericTypes(), float.class, argClazz, argValues);
+    }
+
     public void test(String name, long addr, Class<?> returnClazz, Class<?>[] types, Object[] values) {
         try {
             test(asm -> {
@@ -134,6 +168,7 @@ public class NativeCallTest extends CodeInstallationTest {
                     argTypes[i++] = metaAccess.lookupJavaType(clazz);
                 }
                 JavaType returnType = metaAccess.lookupJavaType(returnClazz);
+                System.out.println(name);
                 CallingConvention cc = codeCache.getRegisterConfig().getCallingConvention(NativeCall, returnType, argTypes, asm.valueKindFactory);
                 asm.emitCallPrologue(cc, values);
                 asm.emitCall(addr);
@@ -243,5 +278,25 @@ public class NativeCallTest extends CodeInstallationTest {
                         l10, l11, l12, l13, l14, l15, l16, l17,
                         l18, l19, l1a, l1b, l1c, l1d, l1e, l1f,
                         a, b, c, d, e, f);
+    }
+
+    public static native long getNumericTypes();
+
+    public static native float _NumericTypes(int i00, int i01, int i02, int i03, int i04, int i05, int i06, int i07,
+                    int i08, int i09, int i0a, int i0b, int i0c, int i0d, int i0e, int i0f,
+                    float i10, float i11, float i12, float i13, float i14, float i15, float i16, float i17,
+                    float i18, float i19, float i1a, float i1b, float i1c, float i1d, float i1e, float i1f,
+                    byte a, byte b, byte c, short d, int e, byte f, float g, byte h, double i, byte j, long k);
+
+    public static float NumericTypes(int i00, int i01, int i02, int i03, int i04, int i05, int i06, int i07,
+                     int i08, int i09, int i0a, int i0b, int i0c, int i0d, int i0e, int i0f,
+                     float i10, float i11, float i12, float i13, float i14, float i15, float i16, float i17,
+                     float i18, float i19, float i1a, float i1b, float i1c, float i1d, float i1e, float i1f,
+                     byte a, byte b, byte c, short d, int e, byte f, float g, byte h, double i, byte j, long k) {
+        return _NumericTypes(i00, i01, i02, i03, i04, i05, i06, i07,
+                        i08, i09, i0a, i0b, i0c, i0d, i0e, i0f,
+                        i10, i11, i12, i13, i14, i15, i16, i17,
+                        i18, i19, i1a, i1b, i1c, i1d, i1e, i1f,
+                        a, b, c, d, e, f, g, h, i, j, k);
     }
 }

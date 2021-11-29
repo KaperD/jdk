@@ -242,6 +242,7 @@ public class AArch64HotSpotRegisterConfig implements RegisterConfig {
         for (int i = 0; i < parameterTypes.length; i++) {
             final JavaKind kind = parameterTypes[i].getJavaKind().getStackKind();
 
+
             switch (kind) {
                 case Byte:
                 case Boolean:
@@ -269,6 +270,7 @@ public class AArch64HotSpotRegisterConfig implements RegisterConfig {
             if (locations[i] == null) {
                 ValueKind<?> valueKind = valueKindFactory.getValueKind(kind);
                 int kindSize = valueKind.getPlatformKind().getSizeInBytes();
+                System.out.println(kind + " " + kindSize);
                 if (macOS && currentStackOffset % kindSize != 0) {
                     // In MacOS natural alignment is used
                     // See https://developer.apple.com/documentation/xcode/writing-arm64-code-for-apple-platforms

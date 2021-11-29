@@ -189,6 +189,39 @@ JNIEXPORT jfloat JNICALL Java_jdk_vm_ci_code_test_NativeCallTest__1L32SDILDS(JNI
                    a,   b,   c,   d,   e,   f);
 }
 
+jfloat JNICALL NumericTypes(jint i00, jint i01, jint i02, jint i03, jint i04, jint i05, jint i06, jint i07,
+                         jint i08, jint i09, jint i0a, jint i0b, jint i0c, jint i0d, jint i0e, jint i0f,
+                         jfloat i10, jfloat i11, jfloat i12, jfloat i13, jfloat i14, jfloat i15, jfloat i16, jfloat i17,
+                         jfloat i18, jfloat i19, jfloat i1a, jfloat i1b, jfloat i1c, jfloat i1d, jfloat i1e, jfloat i1f,
+                         jbyte a, jbyte b, jbyte c, jshort d, jint e, jbyte f, jfloat g, jbyte h, jdouble i, jbyte j, jlong k) {
+  return (jfloat)(i00 + i01 + i02 + i03 + i04 + i05 + i06 + i07 +
+                  i08 + i09 + i0a + i0b + i0c + i0d + i0e + i0f +
+                  i10 + i11 + i12 + i13 + i14 + i15 + i16 + i17 +
+                  i18 + i19 + i1a + i1b + i1c + i1d + i1e + i1f +
+                  a +   b +   c +   d +   e +   f + g + h + i + j + k);
+}
+
+JNIEXPORT jlong JNICALL Java_jdk_vm_ci_code_test_NativeCallTest_getNumericTypes(JNIEnv *env, jclass clazz) {
+  return (jlong) (intptr_t) NumericTypes;
+}
+
+JNIEXPORT jfloat JNICALL Java_jdk_vm_ci_code_test_NativeCallTest__1NumericTypes(JNIEnv *env, jclass clazz,
+                                                                             jint i00, jint i01, jint i02, jint i03,
+                                                                             jint i04, jint i05, jint i06, jint i07,
+                                                                             jint i08, jint i09, jint i0a, jint i0b,
+                                                                             jint i0c, jint i0d, jint i0e, jint i0f,
+                                                                             jint i10, jint i11, jint i12, jint i13,
+                                                                             jint i14, jint i15, jint i16, jint i17,
+                                                                             jint i18, jint i19, jint i1a, jint i1b,
+                                                                             jint i1c, jint i1d, jint i1e, jint i1f,
+                                                                             jbyte a, jbyte b, jbyte c, jshort d, jint e, jbyte f, jfloat g, jbyte h, jdouble i, jbyte j, jlong k) {
+  return NumericTypes(i00, i01, i02, i03, i04, i05, i06, i07,
+                   i08, i09, i0a, i0b, i0c, i0d, i0e, i0f,
+                   i10, i11, i12, i13, i14, i15, i16, i17,
+                   i18, i19, i1a, i1b, i1c, i1d, i1e, i1f,
+                   a,   b,   c,   d,   e,   f, g, h, i, j, k);
+}
+
 #ifdef __cplusplus
 }
 #endif
