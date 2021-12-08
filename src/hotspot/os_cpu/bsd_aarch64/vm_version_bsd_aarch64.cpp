@@ -92,12 +92,6 @@ void VM_Version::get_os_cpu_info() {
   _cpu = CPU_APPLE;
 }
 
-void VM_Version::get_compatible_board(char *buf, int buflen) {
-  assert(buf != NULL, "invalid argument");
-  assert(buflen >= 1, "invalid argument");
-  *buf = '\0';
-}
-
 #ifdef __APPLE__
 
 bool VM_Version::is_cpu_emulated() {
